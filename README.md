@@ -5,7 +5,7 @@
 ### App Description
 Simple Flashcard app that allows user to tap flashcard to reveal or select answer below the card.
 
-<img src="cpathFlashcard_Demo.gif" width=200><br>
+<img src="cpathFlashcard_DemoUPDATED.gif" width=200><br>
 
 ## Required
 - [ x] Create New Project in Xcode
