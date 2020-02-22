@@ -1,15 +1,11 @@
 ## Flashcard App - CodePath
 
-📝 `NOTE:` Paste the README templates for each subsequent lab here at the top, (i.e. lab 2, 3, 4). This will show a history of your development process including which users stories you completed and how your app looked and functioned at each step.
-
 ## Lab 1
 
 ### App Description
 Simple Flashcard app that allows user to tap flashcard to reveal or select answer below the card.
 
 <img src="cpathFlashcard_Demo.gif" width=200><br>
-
-`TODO://` In the User stories section below, add an `x` between the `-[ ]` like this `- [x]` for any user story you complete. (☝️ Remove this paragraph after after checking off user stories)
 
 ## Required
 - [ x] Create New Project in Xcode
