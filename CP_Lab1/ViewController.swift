@@ -36,6 +36,14 @@ class ViewController: UIViewController {
           }
     }
     
+    func updateFlashcard(question: String, answer: String, optionTwo: String, optionThree: String) {
+        questionLabel.text = question
+        answerLabel.text = answer
+        a1Label.text = optionTwo
+        a2Label.text = optionThree
+        a3Label.text = answer
+    }
+    
     @IBAction func didTapOnA1(_ sender: Any) {
         a1Label.isHidden = true;
     }
@@ -53,5 +61,13 @@ class ViewController: UIViewController {
         questionLabel.isHidden = false;
         a3Label.backgroundColor = UIColor(red: 148.0/255, green: 17.0/255, blue: 0/255, alpha: 1);
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let navigationController = segue.destination as! UINavigationController
+        
+        let creationController = navigationController.topViewController as! CreationViewController
+        
+        creationController.flashcardsController = self
+    }
 }
-
