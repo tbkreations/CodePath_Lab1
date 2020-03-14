@@ -15,7 +15,7 @@ Users are now able to browse through multiple cards and see previously created c
 ## Optional
 - [ ] User can delete a flashcard
 - [ ] User can edit existing flashcard
-- [ ] User can store multiple choice questions
+- [ x] User can store multiple choice questions
 
 ## Lab 2
 
@@ -33,7 +33,7 @@ Users can create new flashcards with multiple answer choices
 ## Optional
 - [ ] User gets an error if they try to create a new flashcard with no question or answer
 - [ ] User can edit existing flashcard
-- [ ] User can add multiple choice answers in the creation screen
+- [ x] User can add multiple choice answers in the creation screen
 
 ## Lab 1
 
