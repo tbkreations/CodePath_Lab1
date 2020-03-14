@@ -8,6 +8,13 @@
 
 import UIKit
 
+struct Flashcard {
+    var question: String
+    var answer: String
+    var optionalOne: String
+    var optionalTwo: String
+}
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var card: UIView!
@@ -16,6 +23,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var a1Label: UILabel!
     @IBOutlet weak var a2Label: UILabel!
     @IBOutlet weak var a3Label: UILabel!
+    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var prevButton: UIButton!
+    var flashcards = [Flashcard]()
+    var currentIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         questionLabel.lineBreakMode = NSLineBreakMode.byWordWrapping;
@@ -27,21 +39,81 @@ class ViewController: UIViewController {
         a2Label.clipsToBounds = true;
         a3Label.layer.cornerRadius = 20.0;
         a3Label.clipsToBounds = true;
+        readSavedCards()
+        if flashcards.count == 0 {
+              updateFlashcard(question: "What Year Was Morehouse College Founded?", answer: "1867", optionTwo: "1878", optionThree: "1859")
+        } else {
+            updateLabels()
+            updateNextPrevButtons()
+        }
+      
     }
     @IBAction func didTapOnCard(_ sender: Any) {
           if (questionLabel.isHidden == false) {
               questionLabel.isHidden = true;
+              a3Label.backgroundColor = UIColor(red: 0/255, green: 255/255, blue: 0/255, alpha: 1);
           } else {
               questionLabel.isHidden =  false;
           }
     }
+    @IBAction func didTapNext(_ sender: Any) {
+        currentIndex += 1
+        updateLabels()
+        updateNextPrevButtons()
+    }
     
+    @IBAction func didTapBack(_ sender: Any) {
+        currentIndex -= 1
+        updateLabels()
+        updateNextPrevButtons()
+    }
     func updateFlashcard(question: String, answer: String, optionTwo: String, optionThree: String) {
-        questionLabel.text = question
-        answerLabel.text = answer
-        a1Label.text = optionTwo
-        a2Label.text = optionThree
-        a3Label.text = answer
+        let flashcard = Flashcard(question: question, answer: answer, optionalOne: optionTwo, optionalTwo: optionThree)
+        flashcards.append(flashcard)
+        currentIndex = flashcards.count - 1
+        updateNextPrevButtons()
+        updateLabels()
+        saveAllCards()
+    }
+    
+    func updateLabels() {
+        let currentFlashcard = flashcards[currentIndex]
+        questionLabel.text = currentFlashcard.question
+        answerLabel.text = currentFlashcard.answer
+        a1Label.text = currentFlashcard.optionalOne
+        a2Label.text = currentFlashcard.optionalTwo
+        a3Label.text = currentFlashcard.answer
+    }
+    
+    func updateNextPrevButtons() {
+        if currentIndex == flashcards.count - 1 {
+            nextButton.isEnabled = false
+        } else {
+            nextButton.isEnabled = true
+        }
+        
+        if currentIndex == 0 {
+            prevButton.isEnabled = false
+        } else {
+            prevButton.isEnabled = true
+        }
+    }
+    
+    func readSavedCards() {
+        if let dictionaryArray = UserDefaults.standard.array(forKey: "flashcards") as? [[String: String]] {
+            let savedCards = dictionaryArray.map { dictionary -> Flashcard in
+                return Flashcard(question: dictionary["question"]!, answer: dictionary["answer"]!, optionalOne: dictionary["optionalOne"]!, optionalTwo: dictionary["optionalTwo"]!)
+            }
+            flashcards.append(contentsOf: savedCards)
+        }
+    }
+    
+    func saveAllCards() {
+        let dictionaryArray = flashcards.map { (Card) -> [String: String] in
+            return ["question": Card.question, "answer": Card.answer, "optionalOne": Card.optionalOne, "optionalTwo": Card.optionalTwo]
+        }
+        
+        UserDefaults.standard.set(dictionaryArray, forKey: "flashcards")
     }
     
     @IBAction func didTapOnA1(_ sender: Any) {
@@ -51,7 +123,7 @@ class ViewController: UIViewController {
         a2Label.isHidden = true;
     }
     @IBAction func didTapOnA3(_ sender: Any) {
-        a3Label.layer.backgroundColor = UIColor(red: 0/255, green: 255/255, blue: 0/255, alpha: 1).cgColor;
+        a3Label.backgroundColor = UIColor(red: 0/255, green: 255/255, blue: 0/255, alpha: 1);
         questionLabel.isHidden = true;
     }
     @IBAction func didTapOnReset(_ sender: Any) {
